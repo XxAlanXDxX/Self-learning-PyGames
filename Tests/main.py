@@ -17,8 +17,6 @@ def get_random_position(widow_width, window_height, image_width, image_height):
 
     return random_x, random_y
 
-
-# init mosquito random position
 class Mosquito(pygame.sprite.Sprite):
     def __init__(self, width, height, random_x, random_y, widow_width, window_height):
         super().__init__()
@@ -50,7 +48,7 @@ def main():
     main_clock = pygame.time.Clock()
 
     while True:
-        # 偵測事件
+        
         if not pygame.mixer.music.get_busy():
             pygame.mixer.music.load('./assets/audios/bgm.mp3')
             pygame.mixer.music.play(-1)
@@ -59,16 +57,8 @@ def main():
             if event.type == QUIT:
                 pygame.quit()
                 sys.exit()
-                '''
-            elif event.type == reload_mosquito_event:
-                # 偵測到重新整理事件，固定時間移除蚊子，換新位置
-                mosquito.kill()
-                # 蚊子新位置
-                random_x, random_y = get_random_position(WINDOW_WIDTH, WINDOW_HEIGHT, IMAGEWIDTH, IMAGEHEIGHT)
-                mosquito = Mosquito(IMAGEWIDTH, IMAGEHEIGHT, random_x, random_y, WINDOW_WIDTH, WINDOW_HEIGHT)
-                '''
+                
             elif event.type == MOUSEBUTTONDOWN:
-                # 當使用者點擊滑鼠時，檢查是否滑鼠位置 x, y 有在蚊子圖片上
                 if random_x < pygame.mouse.get_pos()[0] < random_x + IMAGEWIDTH and random_y < pygame.mouse.get_pos()[1] < random_y + IMAGEHEIGHT:
                     mosquito.kill()
                     random_x, random_y = get_random_position(WINDOW_WIDTH, WINDOW_HEIGHT, IMAGEWIDTH, IMAGEHEIGHT)
@@ -85,22 +75,19 @@ def main():
                     else:
                         points = 0
 
-        # 背景顏色，清除畫面
         window_surface.fill(WHITE)
 
-        # 遊戲分數儀表板
         text_surface = my_font.render('Points: {}'.format(points), True, (0, 0, 0))
-        # 渲染物件
+        
         window_surface.blit(mosquito.image, mosquito.rect)
         window_surface.blit(text_surface, (10, 0))
 
-        # 顯示打中提示文字
         if hit_text_surface:
             window_surface.blit(hit_text_surface, (10, 10))
             hit_text_surface = None
 
         pygame.display.update()
-        # 控制遊戲迴圈迭代速率
+        
         main_clock.tick(FPS)
 
 if __name__ == '__main__':    
