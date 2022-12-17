@@ -2,9 +2,20 @@ import sys
 import pygame
 from pygame.locals import *
 
+#常數
 SCREENWIDTH = 822
 SCREENHEIGHT = 260
-FPS = 60
+FPS = 120
+
+DINOWIDTH = 60
+DINOHEIGHT = 70
+GRAVITY = 0.3
+BGSPEED = 2
+BARRIERSPEED = 4
+JUMPVALUE = 10
+
+raw_NSSH = pygame.image.load("./assets/objects/NSSH.png")
+NSSH = pygame.transform.scale(raw_NSSH, (84, 46))
 
 icon = pygame.image.load('./assets/icon.png')
 pygame.display.set_icon(icon)
@@ -29,10 +40,10 @@ class MyMap():
         self.y = y
 
     def map_rolling(self):
-        if self.x < -790:
-            self.x = 800
+        if self.x < -SCREENWIDTH + 10:
+            self.x = SCREENWIDTH
         else:
-            self.x -= 4
+            self.x -= BGSPEED
 
     def map_update(self):
         SCREEN.blit(self.bg, (self.x, self.y))
@@ -46,7 +57,7 @@ class Dinosaur():
 
         self.rect = pygame.Rect(0, 0, 0, 0)
         self.jumpState = False
-        self.gravity = 1 #模擬重力
+        self.gravity = GRAVITY #模擬重力
         self.lowest_y = 160
         self.jumpValue = 0 
 
@@ -58,9 +69,9 @@ class Dinosaur():
         self.raw_dino2 = pygame.image.load("./assets/objects/dinosaur3.png").convert_alpha()
 
         self.dinosaur_img = (
-            pygame.transform.scale(self.raw_dino1, (60, 70)),
-            pygame.transform.scale(self.raw_dino2, (60, 70)),
-            pygame.transform.scale(self.raw_dino2, (60, 70))
+            pygame.transform.scale(self.raw_dino1, (DINOWIDTH, DINOHEIGHT)),
+            pygame.transform.scale(self.raw_dino2, (DINOWIDTH, DINOHEIGHT)),
+            pygame.transform.scale(self.raw_dino2, (DINOWIDTH, DINOHEIGHT))
         )
         self.jump_audio = pygame.mixer.Sound('./assets/audios/jump.wav')
         self.rect.size = self.dinosaur_img[0].get_size()
@@ -75,7 +86,7 @@ class Dinosaur():
     # 小恐龍移動
     def move(self):
         if self.jumpState:
-            self.jumpValue = -18
+            self.jumpValue = -JUMPVALUE
             self.jumpState = False
 
         elif self.rect.y >= self.lowest_y:
@@ -96,20 +107,18 @@ import random
 # 障礙物
 class Barrier():
     score = 1
-    def __init__(self):
+    def __init__(self, barrier_type, width, height):
 
         self.rect = pygame.Rect(0, 0, 0, 0)
 
         self.raw_stone = pygame.image.load("./assets/objects/stone.png").convert_alpha()
-        self.stone = pygame.transform.scale(self.raw_stone, (70, 70))
+        self.stone = pygame.transform.scale(self.raw_stone, (width, height))
         self.raw_cacti = pygame.image.load("./assets/objects/cacti.png").convert_alpha()
-        self.cacti = pygame.transform.scale(self.raw_cacti, (30, 60))
+        self.cacti = pygame.transform.scale(self.raw_cacti, (width, height))
 
         self.score_audio = pygame.mixer.Sound('./assets/audios/score.wav')
 
-        r = random.randint(0, 1)
-
-        if r == 0:
+        if barrier_type == 0:
             self.image = self.stone
         else:
             self.image = self.cacti
@@ -117,16 +126,16 @@ class Barrier():
         self.rect.size = self.image.get_size()
         self.width, self.height = self.rect.size
 
-        self.x = 800
+        self.x = SCREENWIDTH
         self.y = 230 - (self.height / 2)
         self.rect.center = (self.x, self.y)
 
     # 障礙物移動
-    def obstacle_move(self):
-        self.rect.x -= 6
+    def barrier_move(self):
+        self.rect.x -= BARRIERSPEED
 
     # 繪製障礙物
-    def draw_obstacle(self):
+    def draw_barrier(self):
         SCREEN.blit(self.image, (self.rect.x, self.rect.y))
 
     # 獲取分數
@@ -168,8 +177,8 @@ def mainGame():
     bg1 = MyMap(0, 0)
     bg2 = MyMap(800, 0)
     dinosaur = Dinosaur()
-    addObstacleTimer = 0
-    list = []
+    barrier_timer = 0
+    barriers = []
 
     while True:
 
@@ -199,24 +208,37 @@ def mainGame():
             dinosaur.move()
             dinosaur.draw_dinosaur()
 
-            if addObstacleTimer >= 1300:
-                r = random.randint(0, 100)
-                if r > 40:
-                    barrier = Barrier()
-                    list.append(barrier)
-                addObstacleTimer = 0
+            SCREEN.blit(NSSH, (SCREENWIDTH - 100, 8))
 
-            for i in range(len(list)): #障礙物
-                list[i].obstacle_move()
-                list[i].draw_obstacle()
+            if barrier_timer >= 2100:
+                rand_0 = random.randint(0, 100)
+                
+                if rand_0 > 40:
+                    if rand_0 % 2 == 0:
+                        rand_1 = random.randint(60, 80)
+                        barrier = Barrier(rand_0 % 2, rand_1, rand_1)
+                    else:
+                        rand_1 = random.randint(30, 40)
+                        barrier = Barrier(rand_0 % 2, rand_1, rand_1 * 2)
+
+                    barriers.append(barrier)
+                barrier_timer = 0
+
+            for i in barriers:
+                if i.rect.x < -100:
+                    barriers.remove(i)
+
+            for i in range(len(barriers)): #障礙物
+                barriers[i].barrier_move()
+                barriers[i].draw_barrier()
         
-                if pygame.sprite.collide_rect(dinosaur, list[i]):  # 判斷恐龍與障礙物是否碰撞
+                if pygame.sprite.collide_rect(dinosaur, barriers[i]):  # 判斷恐龍與障礙物是否碰撞
                     over = True
                     Gameover()
 
                 else:
-                    if (list[i].rect.x + list[i].rect.width) < dinosaur.rect.x:
-                        score += list[i].getScore()
+                    if (barriers[i].rect.x + barriers[i].rect.width) < dinosaur.rect.x:
+                        score += barriers[i].getScore()
                     
                     if score > high_score:
                         high_score = score
@@ -228,7 +250,7 @@ def mainGame():
         SCREEN.blit(score_surface, (10, 5))
         SCREEN.blit(text_surface, (550, 240))
 
-        addObstacleTimer += 20
+        barrier_timer += random.randint(10, 40)
         pygame.display.update()
         FPSCLOCK.tick(FPS)
 
