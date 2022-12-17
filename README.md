@@ -13,7 +13,6 @@ windows
 
 
 ## 使用教學:
-下載 : [PyGames](https://github.com/XxAlanXDxX/Self-learning-PyGames/archive/refs/heads/main.zip, "下載")
 打開遊戲的資料夾然後持行該遊戲的.exe檔
 
 
