@@ -243,8 +243,8 @@ def mainGame():
                     if score > high_score:
                         high_score = score
 
-        # 顯示分數
-        score_surface = score_font.render('Scores: %d | High Score: %d' %(score, high_score), True, (0, 0, 0))
+        
+        score_surface = score_font.render('Scores: %d | High Score: %d' %(score, high_score), True, (0, 0, 0)) # 顯示分數
         text_surface = my_font.render('Made by nssh jnr177 22 Alan, 33 Ray'.format(score), True, (0, 0, 0))
 
         SCREEN.blit(score_surface, (10, 5))
