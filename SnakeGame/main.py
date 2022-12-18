@@ -47,8 +47,6 @@ class Snake():
             self.raw_image = pygame.image.load("./assets/objects/snake.png")
             self.image = pygame.transform.scale(self.raw_image, (25, 25))
 
-        
-
         self.x = x
         self.y = y
 
@@ -104,7 +102,6 @@ class Food():
 
     def Draw(self):
         SCREEN.blit(self.image, (self.x, self.y))
-
 
 # 遊戲結束
 def Gameover():
