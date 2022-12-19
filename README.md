@@ -13,7 +13,8 @@ windows
 
 
 ## 使用教學:
-打開遊戲的資料夾然後執行該遊戲的.exe檔
+下載[成品](https://github.com/XxAlanXDxX/Self-learning-PyGames/archive/refs/heads/main.zip "自主學習遊戲製作")
 
+打開遊戲的資料夾然後執行該遊戲的.exe檔
 
 ## 更新日誌:
