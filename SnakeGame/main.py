@@ -183,6 +183,10 @@ def mainGame():
                 temp_x, temp_y = snake_bodys[0].GetCoordinate()
                 snake_bodys[0].move_to(head_x, head_y)
 
+                if head_x > 500 or head_x < 0 or head_y >= 500 or head_y < 0:
+                    over = True
+                    Gameover()
+
                 if snake_head.GetCoordinate() == food.GetCoordinate(): #吃到食物
                     food.move_to(random.randint(0, 19) * 25, random.randint(0, 19) * 25)
                     print(food.GetCoordinate())
@@ -194,10 +198,7 @@ def mainGame():
                     if score > high_score:
                         high_score = score
                 
-                if head_x > 500 or head_x < 0 or head_y >= 500 or head_y < 0:
-                    over = True
-                    Gameover()
-
+            
                 for body in snake_bodys:
                     if body.GetCoordinate() == snake_head.GetCoordinate():
                         over = True
