@@ -129,6 +129,12 @@ def mainGame():
     over = False
     tick = 0
 
+    FPSCLOCK = pygame.time.Clock()
+    SCREEN = pygame.display.set_mode((SCREENWIDTH, SCREENHEIGHT))
+    pygame.display.set_caption('SnakeGame')
+    score_font = pygame.font.SysFont(None, 30)
+    my_font = pygame.font.SysFont(None, 20)
+
     snake_head = Snake(100, 250, True)
     snake_bodys = []
     snake_bodys.append(Snake(75, 250, False))
@@ -138,12 +144,6 @@ def mainGame():
 
     direction_now = 1
     direction_next = direction_now
-
-    FPSCLOCK = pygame.time.Clock()
-    SCREEN = pygame.display.set_mode((SCREENWIDTH, SCREENHEIGHT))
-    pygame.display.set_caption('SnakeGame')
-    score_font = pygame.font.SysFont(None, 30)
-    my_font = pygame.font.SysFont(None, 20)
 
     while True:
         for event in pygame.event.get():

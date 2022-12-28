@@ -73,6 +73,7 @@ class Dinosaur():
             pygame.transform.scale(self.raw_dino2, (DINOWIDTH, DINOHEIGHT)),
             pygame.transform.scale(self.raw_dino2, (DINOWIDTH, DINOHEIGHT))
         )
+        
         self.jump_audio = pygame.mixer.Sound('./assets/audios/jump.wav')
         self.rect.size = self.dinosaur_img[0].get_size()
         self.x = 50
