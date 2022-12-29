@@ -9,8 +9,7 @@
 
 
 ## 適用平台:
-windows 部分程式僅支援 windows 11
-Mac用戶先下去
+windows 部分程式僅支援 windows 11，然後Mac用戶先下去
 
 
 ## 使用教學:
