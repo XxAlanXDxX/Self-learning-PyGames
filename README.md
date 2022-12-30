@@ -37,7 +37,7 @@ Windows (部分程式僅支援 Windows 11)
  萬年不敗的的經典
 ```
 
-遊戲(4): [沒有磚塊的打磚塊](https://github.com/XxAlanXDxX/Self-learning-PyGamesAndTools.git "彈力球模擬器")
+遊戲(4): 沒有磚塊的打磚塊(AKA 彈力球模擬器)
 ```
  啪!沒了!
 ```
@@ -98,7 +98,7 @@ Windows (部分程式僅支援 Windows 11)
 12月23日
 >把東西補齊了...嗎?
 >
->聖誕節前喜提[黃單](https://github.com/XxAlanXDxX/Self-learning-PyGamesAndTools.git "違規事件處理單")一張
+>聖誕節前喜提黃單一張
 
 12月24日
 >程式3缺一
