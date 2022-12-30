@@ -9,12 +9,12 @@
 
 
 ## 適用平台:
-windows 部分程式僅支援 windows 11
+Windows (部分程式僅支援 Windows 11)
 
 ## 使用教學:
-下載[成品](https://github.com/XxAlanXDxX/Self-learning-PyGames/archive/refs/heads/main.zip "自主學習遊戲製作")
+下載[成品](https://github.com/XxAlanXDxX/Self-learning-PyGames/archive/refs/heads/main.zip "Windows版下載")
 
-下載[Mac版](https://www.youtube.com/watch?v=dQw4w9WgXcQ)
+下載[Mac版](https://www.youtube.com/watch?v=dQw4w9WgXcQ "Mac版下載")
 
 打開檔案的資料夾然後執行該遊戲的.exe檔 :)
 
